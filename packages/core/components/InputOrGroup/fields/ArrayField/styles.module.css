@@ -5,21 +5,21 @@
 .ArrayField {
   display: flex;
   flex-direction: column;
-  background-color: var(--puck-color-grey-8);
-  border: 1px solid var(--puck-color-grey-8);
+  background-color: var(--puck-color-input-border);
+  border: 1px solid var(--puck-color-input-border);
   border-radius: 4px;
 }
 
 .ArrayField--isDraggingFrom {
-  background-color: var(--puck-color-azure-9);
+  background-color: var(--puck-color-input-background--interactive);
 }
 
 .ArrayField-addButton {
-  background-color: white;
+  background-color: var(--puck-color-input-background);
   border: none;
   border-radius: 4px;
   display: flex;
-  color: var(--puck-color-azure-4);
+  color: var(--puck-color-input-foreground--interactive);
   justify-content: center;
   cursor: pointer;
   width: 100%;
@@ -34,8 +34,8 @@
 }
 
 .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:hover {
-  background: var(--puck-color-azure-9);
-  color: var(--puck-color-azure-4);
+  background: var(--puck-color-input-background--interactive);
+  color: var(--puck-color-input-foreground--interactive);
 }
 
 /**
@@ -43,7 +43,7 @@
  */
 
 .ArrayFieldItem {
-  background: white;
+  background: var(--puck-color-input-background);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   display: block;
@@ -51,7 +51,7 @@
 }
 
 .ArrayField--isDraggingFrom > .ArrayFieldItem:not(.ArrayFieldItem--isDragging) {
-  border-bottom: 1px solid var(--puck-color-grey-8);
+  border-bottom: 1px solid var(--puck-color-input-border);
   margin-bottom: 0;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .ArrayFieldItem-summary {
-  color: var(--puck-color-grey-3);
+  color: var(--puck-color-input_label-foreground);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,8 +82,8 @@
 }
 
 .ArrayFieldItem--readOnly > .ArrayFieldItem-summary {
-  background-color: var(--puck-color-grey-11);
-  color: var(--puck-color-grey-5);
+  background-color: var(--puck-color-input-background--readonly);
+  color: var(--puck-color-input-foreground--readonly);
 }
 
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {
@@ -97,9 +97,9 @@
 
 .ArrayFieldItem-summary:hover,
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {
-  background: var(--puck-color-azure-9);
+  background: var(--puck-color-input-background--interactive);
   cursor: pointer;
-  color: var(--puck-color-azure-4);
+  color: var(--puck-color-input-foreground--interactive);
 }
 
 .ArrayFieldItem-body {
@@ -112,7 +112,7 @@
 
 .ArrayFieldItem-fieldset {
   border: none;
-  border-top: 1px solid var(--puck-color-grey-8);
+  border-top: 1px solid var(--puck-color-input-border);
   margin: 0;
   padding: 16px;
 }
@@ -134,8 +134,8 @@
 }
 
 .ArrayFieldItem-action:hover {
-  background: var(--puck-color-grey-9);
+  background: var(--puck-color-input_label_action-background--interactive);
   border-radius: 4px;
-  color: var(--puck-color-blue);
+  color: var(--puck-color-input_label_action-foreground--interactive);
   cursor: pointer;
 }

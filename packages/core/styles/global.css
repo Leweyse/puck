@@ -8,8 +8,8 @@
   --puck-color-component_list_title-foreground: var(--puck-color-grey-4);
   --puck-color-component_list_title-background--interactive: var(--puck-color-azure-9);
   --puck-color-component_list_title-foreground--interactive: var(--puck-color-azure-4);
-  --puck-color-component_list_item-background: white; 
-  --puck-color-component_list_item-foreground: var(--puck-color-black); 
+  --puck-color-component_list_item-background: var(--puck-color-background); 
+  --puck-color-component_list_item-foreground: var(--puck-color-foreground); 
   --puck-color-component_list_item-border: var(--puck-color-grey-8);
   --puck-color-component_list_item-background--interactive: var(--puck-color-azure-9); 
   --puck-color-component_list_item-foreground--interactive: var(--puck-color-azure-4); 
@@ -32,13 +32,20 @@
   --puck-color-draggable_actions-foreground--interactive: var(--puck-color-azure-5);
   --puck-color-draggable_actions_separator: var(--puck-color-grey-4);
 
-  --puck-color-input-background: var(--puck-color-white);
-  --puck-color-input-foreground: var(--puck-color-black);
+  --puck-color-input-background: var(--puck-color-background);
+  --puck-color-input-foreground: var(--puck-color-foreground);
+  --puck-color-input-muted-background: var(--puck-color-grey-11);
+  --puck-color-input-muted-foreground: var(--puck-color-grey-4);
   --puck-color-input-border: var(--puck-color-grey-8);
-  --puck-color-input-background--readonly: var(--puck-color-grey-10);
+  --puck-color-input-background--interactive: var(--puck-color-azure-9);
+  --puck-color-input-foreground--interactive: var(--puck-color-azure-4);
   --puck-color-input-border--interactive: var(--puck-color-neutral-3);
-  --puck-color-input_label_icon: var(--puck-color-grey-6);
+  --puck-color-input-background--readonly: var(--puck-color-grey-11);
+  --puck-color-input-foreground--readonly: var(--puck-color-grey-5);
   --puck-color-input_label-foreground: var(--puck-color-grey-3);
+  --puck-color-input_label_icon: var(--puck-color-grey-6);
+  --puck-color-input_label_action-background--interactive: var(--puck-color-grey-9);
+  --puck-color-input_label_action-foreground--interactive: var(--puck-color-blue);
 
   --puck-color-layer_tree: var();
 
