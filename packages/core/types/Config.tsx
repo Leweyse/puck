@@ -14,9 +14,6 @@ export type Adaptor<
 
 type WithPuckProps<Props> = Props & {
   id: string;
-  _meta?: {
-    readOnly: Partial<Record<keyof Props, boolean>>;
-  };
 };
 
 export type BaseField = {
@@ -78,11 +75,13 @@ export type Field<
   | CustomField;
 
 export type DefaultRootProps = {
-  children: ReactNode;
-  title: string;
-  editMode: boolean;
+  title?: string;
   [key: string]: any;
 };
+
+export type DefaultRootRenderProps = {
+  editMode: boolean;
+} & DefaultRootProps;
 
 export type DefaultComponentProps = { [key: string]: any; editMode?: boolean };
 
@@ -97,19 +96,22 @@ export type Fields<
 
 export type Content<
   Props extends { [key: string]: any } = { [key: string]: any }
-> = MappedItem<Props>[];
+> = ComponentData<Props>[];
 
 export type ComponentConfig<
   ComponentProps extends DefaultComponentProps = DefaultComponentProps,
-  DefaultProps = ComponentProps
+  DefaultProps = ComponentProps,
+  DataShape = ComponentData<ComponentProps>
 > = {
   render: (props: WithPuckProps<ComponentProps>) => ReactElement;
   defaultProps?: DefaultProps;
   fields?: Fields<ComponentProps>;
-  resolveProps?: (props: WithPuckProps<ComponentProps>) => Promise<{
-    props: WithPuckProps<ComponentProps>;
-    readOnly?: Partial<Record<keyof ComponentProps, boolean>>;
-  }>;
+  resolveData?: (
+    data: DataShape,
+    params: { changed: Partial<Record<keyof ComponentProps, boolean>> }
+  ) =>
+    | Promise<Partial<ComponentDataWithOptionalProps<ComponentProps>>>
+    | Partial<ComponentDataWithOptionalProps<ComponentProps>>;
 };
 
 type Category<ComponentName> = {
@@ -128,36 +130,65 @@ export type Config<
     other?: Category<Props>;
   };
   components: {
-    [ComponentName in keyof Props]: ComponentConfig<
-      Props[ComponentName],
-      Props[ComponentName]
+    [ComponentName in keyof Props]: Omit<
+      ComponentConfig<Props[ComponentName], Props[ComponentName]>,
+      "type"
     >;
   };
-  root?: ComponentConfig<
-    RootProps & { children: ReactNode },
-    Partial<RootProps & { children: ReactNode }>
+  root?: Partial<
+    ComponentConfig<
+      RootProps & { children: ReactNode },
+      Partial<RootProps & { children: ReactNode }>,
+      RootDataWithProps<RootProps>
+    >
   >;
 };
 
-export type MappedItem<
+export type BaseData<
   Props extends { [key: string]: any } = { [key: string]: any }
 > = {
-  type: keyof Props;
-  props: WithPuckProps<{
-    [key: string]: any;
-  }>;
+  readOnly?: Partial<Record<keyof Props, boolean>>;
 };
 
-export type Data<
-  Props extends { [key: string]: any } = { [key: string]: any },
-  RootProps extends { title: string; [key: string]: any } = {
-    title: string;
-    [key: string]: any;
-  }
+export type ComponentData<
+  Props extends DefaultComponentProps = DefaultComponentProps
 > = {
-  root: RootProps;
-  content: Content<Props>;
-  zones?: Record<string, Content<Props>>;
+  type: keyof Props;
+  props: WithPuckProps<Props>;
+} & BaseData<Props>;
+
+export type RootDataWithProps<
+  Props extends DefaultRootProps = DefaultRootProps
+> = {
+  props: Props;
+};
+
+// DEPRECATED
+export type RootDataWithoutProps<
+  Props extends DefaultRootProps = DefaultRootProps
+> = Props;
+
+export type RootData<Props extends DefaultRootProps = DefaultRootProps> =
+  BaseData<Props> &
+    Partial<RootDataWithProps<Props>> &
+    Partial<RootDataWithoutProps<Props>>; // DEPRECATED
+
+type ComponentDataWithOptionalProps<
+  Props extends { [key: string]: any } = { [key: string]: any }
+> = Omit<ComponentData, "props"> & {
+  props: Partial<WithPuckProps<Props>>;
+};
+
+// Backwards compatability
+export type MappedItem = ComponentData;
+
+export type Data<
+  Props extends DefaultComponentProps = DefaultComponentProps,
+  RootProps extends DefaultRootProps = DefaultRootProps
+> = {
+  root: RootData<RootProps>;
+  content: Content<WithPuckProps<Props>>;
+  zones?: Record<string, Content<WithPuckProps<Props>>>;
 };
 
 export type ItemWithId = {

@@ -1,6 +1,7 @@
 "use client";
 
-import { Data, resolveData } from "@measured/puck";
+import { Data } from "@measured/puck/types/Config";
+import { resolveAllData } from "@measured/puck/lib/resolve-all-data";
 import { Puck } from "@measured/puck/components/Puck";
 import { Render } from "@measured/puck/components/Render";
 import { useEffect, useState } from "react";
@@ -36,13 +37,14 @@ export function Client({ path, isEdit }: { path: string; isEdit: boolean }) {
 
   useEffect(() => {
     if (data && !isEdit) {
-      resolveData(data, config).then(setResolvedData);
+      resolveAllData(data, config).then(setResolvedData);
     }
   }, [data, isEdit]);
 
   useEffect(() => {
     if (!isEdit) {
-      document.title = data?.root?.title || "";
+      const title = data?.root.props?.title || data.root.title;
+      document.title = title || "";
     }
   }, [data, isEdit]);
 

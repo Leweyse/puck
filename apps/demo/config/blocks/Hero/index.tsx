@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { ComponentConfig } from "@measured/puck";
+import { ComponentConfig } from "@measured/puck/types/Config";
 import styles from "./styles.module.css";
 import { getClassNameFactory } from "@measured/puck/lib";
 import { Button } from "@measured/puck/components/Button";
@@ -17,7 +17,12 @@ export type HeroProps = {
   padding: string;
   imageMode?: "inline" | "background";
   imageUrl?: string;
-  buttons: { label: string; href: string; variant?: "primary" | "secondary" }[];
+  buttons: {
+    label: string;
+    href: string;
+    variant?: "primary" | "secondary";
+    more?: { text: string }[];
+  }[];
 };
 
 export const Hero: ComponentConfig<HeroProps> = {
@@ -80,8 +85,8 @@ export const Hero: ComponentConfig<HeroProps> = {
     padding: "64px",
   },
   /**
-   * The resolveProps method allows us to modify props after the Puck
-   * data has been set.
+   * The resolveData method allows us to modify component data after being
+   * set by the user.
    *
    * It is called after the page data is changed, but before a component
    * is rendered. This allows us to make dynamic changes to the props
@@ -89,13 +94,19 @@ export const Hero: ComponentConfig<HeroProps> = {
    *
    * For example, requesting a third-party API for the latest content.
    */
-  resolveProps: async (props) => {
+  resolveData: async ({ props }, { changed }) => {
     if (!props.quote)
       return { props, readOnly: { title: false, description: false } };
 
+    if (!changed.quote) {
+      return { props };
+    }
+
+    // Simulate a delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     return {
       props: {
-        ...props,
         title: quotes[props.quote.index].author,
         description: quotes[props.quote.index].content,
       },

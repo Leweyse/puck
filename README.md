@@ -277,19 +277,9 @@ When the user interacts with this adaptor, they'll be presented with a list of i
 
 Dynamic prop resolution allows developers to resolve props for components without saving the data to the Puck data model.
 
-### resolveProps()
+### resolveData()
 
-`resolveProps` is defined in the component config, and allows the developer to make asynchronous calls to change the props after they've been set by Puck.
-
-#### Args
-
-- **props** (`object`): the current props for your component stored in the Puck data
-
-#### Response
-
-- **props** (`object`): the resolved props for your component. Will not be stored in the Puck data
-- **readOnly** (`object`): an object describing which fields on the component are currently read-only
-  - **[prop]** (`boolean`): boolean describing whether or not the prop field is read-only
+`resolveData` is defined in the component config, and allows the developer to make asynchronous calls to change the [ComponentData](#componentdata) after they've been set by Puck. Receives [ComponentData](#componentdata) and returns [ComponentData](#componentdata).
 
 #### Examples
 
@@ -309,7 +299,7 @@ const config = {
           type: "text",
         },
       },
-      resolveProps: async (props) => {
+      resolveData: async (props) => {
         return {
           props: {
             title: props.text,
@@ -329,7 +319,7 @@ const config = {
 
 ##### Combining with adaptors
 
-A more advanced pattern is to combine the `resolveProps` method with the adaptors to dynamically fetch data when rendering the component.
+A more advanced pattern is to combine the `resolveData` method with the adaptors to dynamically fetch data when rendering the component.
 
 ```tsx
 const myAdaptor = {
@@ -355,7 +345,7 @@ const config = {
           type: "text",
         },
       },
-      resolveProps: async (props) => {
+      resolveData: async (props) => {
         if (!myData.id) {
           return { props, readOnly: { title: false } };
         }
@@ -381,14 +371,16 @@ const config = {
 };
 ```
 
-### resolveData()
+### resolveAllData()
 
-`resolveData` is a utility function exported by Puck to enable the developer to resolve their custom props before rendering their component with `<Render>`. This is ideally done on the server. If you're using `resolveProps`, you _must_ use `resolveData` before rendering.
+`resolveAllData` is a utility function exported by Puck to enable the developer to run all their `resolveData` methods before rendering the component with `<Render>`.
+
+If your `resolveData` methods rely on any external APIs, you should run this before rendering your page.
 
 ```tsx
-import { resolveData } from "@measured/puck";
+import { resolveAllData } from "@measured/puck";
 
-const resolvedData = resolveData(data, config);
+const resolvedData = resolveAllData(data, config);
 ```
 
 ## Reference
@@ -431,18 +423,13 @@ The `Config` object describes which components Puck should render, how they shou
     - **title** (`Field`): Title of the content, typically used for the page title.
     - **[fieldName]** (`Field`): User defined fields, used to describe the input data stored in the `root` key.
   - **render** (`Component`): Render a React component at the root of your component tree. Useful for defining context providers.
+  - **resolveData** (`async (data: ComponentData) => ComponentData` [optional]): Function to dynamically change props before rendering the root.
 - **components** (`object`): Definitions for each of the components you want to show in the visual editor
   - **[componentName]** (`object`)
     - **fields** (`Field`): The Field objects describing the input data stored against this component.
     - **render** (`Component`): Render function for your React component. Receives props as defined in fields.
     - **defaultProps** (`object` [optional]): Default props to pass to your component. Will show in fields.
-    - **resolveProps** (`async (props: object) => object` [optional]): Function to dynamically change props before rendering the component.
-      - Args
-        - **props** (`object`): the current props for your component stored in the Puck data
-      - Response
-        - **props** (`object`): the resolved props for your component. Will not be stored in the Puck data
-        - **readOnly** (`object`): an object describing which fields on the component are currently read-only
-          - **[prop]** (`boolean`): boolean describing whether or not the prop field is read-only
+    - **resolveData** (`async (data: ComponentData) => ComponentData` [optional]): Function to dynamically change props before rendering the component.
 - **categories** (`object`): Component categories for rendering in the side bar or restricting in DropZones
   - **[categoryName]** (`object`)
     - **components** (`sting[]`, [optional]): Array containing the names of components in this category
@@ -532,13 +519,20 @@ The `AppState` object stores the puck application state.
 
 The `Data` object stores the puck page data.
 
-- **root** (`object`):
-  - **title** (string): Title of the content, typically used for the page title
-  - **[prop]** (string): User defined data from `root` fields
-- **content** (`object[]`):
-  - **type** (string): Component name
-  - **props** (object):
-    - **[prop]** (string): User defined data from component fields
+- **root** (`ComponentData`): The component data for the root of your configuration.
+  - **props** (object): Extends `ComponentData.props`, with some additional props
+    - **title** (`string`, [optional]): Title of the content, typically used for the page title
+- **content** (`ComponentData[]`): Component data for the main content
+- **zones** (`object`, [optional]): Component data for all DropZones
+  **[zoneCompound]** (`ComponentData[]`): Component data for a specific DropZone `zone` within a component instance
+
+### `ComponentData`
+
+- **type** (`string`): Component name
+- **props** (`object`):
+  - **[prop]** (`any`): User defined data from component fields
+- **readOnly** (`object`): Object describing which fields on the component are currently read-only. Can use dot-notation for arrays, like `array[1].text` or `array[*].text`.
+  - **[prop]** (`boolean`): boolean describing whether or not the prop field is read-only
 
 ### `Plugin`
 

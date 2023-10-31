@@ -12,7 +12,6 @@ import { DragDropContext, DragStart, DragUpdate } from "react-beautiful-dnd";
 import type { AppState, Config, Data, Field } from "../../types/Config";
 import { InputOrGroup } from "../InputOrGroup";
 import { ComponentList } from "../ComponentList";
-import { filter } from "../../lib";
 import { Button } from "../Button";
 
 import { Plugin } from "../../types/Plugin";
@@ -33,7 +32,7 @@ import { flushZones } from "../../lib/flush-zones";
 import { usePuckHistory } from "../../lib/use-puck-history";
 import { AppProvider, defaultAppState } from "./context";
 import { useComponentList } from "../../lib/use-component-list";
-import { resolveAllProps } from "../../lib/resolve-all-props";
+import { useResolvedData } from "../../lib/use-resolved-data";
 
 const Field = () => {};
 
@@ -73,7 +72,7 @@ const PluginRenderer = ({
 
 export function Puck({
   config,
-  data: initialData = { content: [], root: { title: "" } },
+  data: initialData = { content: [], root: { props: { title: "" } } },
   onChange,
   onPublish,
   plugins = [],
@@ -105,8 +104,6 @@ export function Puck({
   headerTitle?: string;
   headerPath?: string;
 }) {
-  const [dynamicProps, setDynamicProps] = useState<Record<string, any>>({});
-
   const [reducer] = useState(() => createReducer({ config }));
 
   const initialAppState: AppState = {
@@ -142,24 +139,11 @@ export function Puck({
 
   const { data, ui } = appState;
 
-  useEffect(() => {
-    // Flatten zones
-    const flatContent = Object.keys(data.zones || {}).reduce(
-      (acc, zone) => [...acc, ...data.zones![zone]],
-      data.content
-    );
-
-    resolveAllProps(flatContent, config).then((dynamicContent) => {
-      const newDynamicProps = dynamicContent.reduce<Record<string, any>>(
-        (acc, item) => {
-          return { ...acc, [item.props.id]: item.props };
-        },
-        {}
-      );
-
-      setDynamicProps(newDynamicProps);
-    });
-  }, [data]);
+  const { resolveData, componentState } = useResolvedData(
+    data,
+    config,
+    dispatch
+  );
 
   const { canForward, canRewind, rewind, forward } = usePuckHistory({
     appState,
@@ -178,9 +162,7 @@ export function Puck({
     []
   );
 
-  const selectedItem = itemSelector
-    ? getItem(itemSelector, data, dynamicProps)
-    : null;
+  const selectedItem = itemSelector ? getItem(itemSelector, data) : null;
 
   const Page = useCallback(
     (pageProps) => (
@@ -271,9 +253,23 @@ export function Puck({
 
   const componentList = useComponentList(config, appState.ui);
 
+  // DEPRECATED
+  const rootProps = data.root.props || data.root;
+
+  // DEPRECATED
+  useEffect(() => {
+    if (Object.keys(data.root).length > 0 && !data.root.props) {
+      console.error(
+        "Warning: Defining props on `root` is deprecated. Please use `root.props`. This will be a breaking change in a future release "
+      );
+    }
+  }, []);
+
   return (
     <div className="puck">
-      <AppProvider value={{ state: appState, dispatch, config }}>
+      <AppProvider
+        value={{ state: appState, dispatch, config, componentState }}
+      >
         <DragDropContext
           onDragUpdate={(update) => {
             setDraggedItem({ ...draggedItem, ...update });
@@ -342,7 +338,6 @@ export function Puck({
             value={{
               data,
               itemSelector,
-              dynamicProps,
               setItemSelector,
               config,
               dispatch,
@@ -433,7 +428,7 @@ export function Puck({
                             }}
                           >
                             <Heading rank={2} size="xs">
-                              {headerTitle || data.root.title || "Page"}
+                              {headerTitle || rootProps.title || "Page"}
                               {headerPath && (
                                 <small
                                   style={{ fontWeight: 400, marginLeft: 4 }}
@@ -549,7 +544,6 @@ export function Puck({
                         )}
                       </SidebarSection>
                     </div>
-
                     <div
                       style={{
                         overflowY: "auto",
@@ -609,6 +603,11 @@ export function Puck({
                           noPadding
                           showBreadcrumbs
                           title={selectedItem ? selectedItem.type : "Page"}
+                          isLoading={
+                            selectedItem
+                              ? componentState[selectedItem?.props.id]?.loading
+                              : componentState["puck-root"]?.loading
+                          }
                         >
                           {Object.keys(fields).map((fieldName) => {
                             const field = fields[fieldName];
@@ -621,9 +620,6 @@ export function Puck({
                               } else {
                                 currentProps = data.root;
                               }
-
-                              const { readOnly, ..._meta } =
-                                currentProps._meta || {};
 
                               const newProps = {
                                 ...currentProps,
@@ -638,17 +634,29 @@ export function Puck({
                                     itemSelector.zone || rootDroppableId,
                                   data: { ...selectedItem, props: newProps },
                                 });
+
+                                resolveData();
                               } else {
-                                dispatch({
-                                  type: "setData",
-                                  data: { root: newProps },
-                                });
+                                if (data.root.props) {
+                                  dispatch({
+                                    type: "setData",
+                                    data: { root: { props: { newProps } } },
+                                  });
+                                } else {
+                                  // DEPRECATED
+                                  dispatch({
+                                    type: "setData",
+                                    data: { root: newProps },
+                                  });
+                                }
+
+                                resolveData();
                               }
                             };
 
                             if (selectedItem && itemSelector) {
-                              const { readOnly = {} } =
-                                selectedItem.props._meta || {};
+                              const { readOnly = {} } = selectedItem;
+
                               return (
                                 <InputOrGroup
                                   key={`${selectedItem.props.id}_${fieldName}`}
@@ -656,12 +664,13 @@ export function Puck({
                                   name={fieldName}
                                   label={field.label}
                                   readOnly={readOnly[fieldName]}
+                                  readOnlyFields={readOnly}
                                   value={selectedItem.props[fieldName]}
                                   onChange={onChange}
                                 />
                               );
                             } else {
-                              const { readOnly = {} } = data.root._meta || {};
+                              const { readOnly = {} } = data.root;
 
                               return (
                                 <InputOrGroup
@@ -670,7 +679,8 @@ export function Puck({
                                   name={fieldName}
                                   label={field.label}
                                   readOnly={readOnly[fieldName]}
-                                  value={data.root[fieldName]}
+                                  readOnlyFields={readOnly}
+                                  value={rootProps[fieldName]}
                                   onChange={onChange}
                                 />
                               );
@@ -686,6 +696,7 @@ export function Puck({
           </DropZoneProvider>
         </DragDropContext>
       </AppProvider>
+      <div id="puck-portal-root" />
     </div>
   );
 }

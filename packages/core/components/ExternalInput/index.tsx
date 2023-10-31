@@ -2,7 +2,9 @@ import { useMemo, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import getClassNameFactory from "../../lib/get-class-name-factory";
 import { ExternalField } from "../../types/Config";
-import { Link } from "react-feather";
+import { Link, Unlock } from "react-feather";
+import { Modal } from "../Modal";
+import { Heading } from "../Heading";
 
 const getClassName = getClassNameFactory("ExternalInput", styles);
 
@@ -84,57 +86,56 @@ export const ExternalInput = ({
               onChange(null);
             }}
           >
-            Detach
+            <Unlock size={16} />
           </button>
         )}
       </div>
-      <div className={getClassName("modal")} onClick={() => setOpen(false)}>
-        <div
-          className={getClassName("modalInner")}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <h2 className={getClassName("modalHeading")}>Select content</h2>
-
-          {data.length ? (
-            <div className={getClassName("modalTableWrapper")}>
-              <table>
-                <thead>
-                  <tr>
-                    {keys.map((key) => (
-                      <th key={key} style={{ textAlign: "left" }}>
-                        {key}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((item, i) => {
-                    return (
-                      <tr
-                        key={i}
-                        style={{ whiteSpace: "nowrap" }}
-                        onClick={(e) => {
-                          onChange(mapProp(item));
-
-                          setOpen(false);
-
-                          setSelectedData(mapProp(item));
-                        }}
-                      >
-                        {keys.map((key) => (
-                          <td key={key}>{item[key]}</td>
-                        ))}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div style={{ padding: 24 }}>No content</div>
-          )}
+      <Modal onClose={() => setOpen(false)} isOpen={isOpen}>
+        <div className={getClassName("masthead")}>
+          <Heading rank={2} size="xxl">
+            Select content
+          </Heading>
         </div>
-      </div>
+
+        {data.length ? (
+          <div className={getClassName("modalTableWrapper")}>
+            <table className={getClassName("table")}>
+              <thead>
+                <tr>
+                  {keys.map((key) => (
+                    <th key={key} style={{ textAlign: "left" }}>
+                      {key}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr
+                      key={i}
+                      style={{ whiteSpace: "nowrap" }}
+                      onClick={(e) => {
+                        onChange(mapProp(item));
+
+                        setOpen(false);
+
+                        setSelectedData(mapProp(item));
+                      }}
+                    >
+                      {keys.map((key) => (
+                        <td key={key}>{item[key]}</td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div style={{ padding: 24 }}>No content</div>
+        )}
+      </Modal>
     </div>
   );
 };

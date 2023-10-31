@@ -1,8 +1,7 @@
 import getClassNameFactory from "../../../../lib/get-class-name-factory";
-import inputStyles from "../../styles.module.css";
 import styles from "./styles.module.css";
 import { List, Plus, Trash } from "react-feather";
-import { InputOrGroup, type InputProps } from "../..";
+import { FieldLabelInternal, InputOrGroup, type InputProps } from "../..";
 import { IconButton } from "../../../IconButton";
 import { reorder, replace } from "../../../../lib";
 import DroppableStrictMode from "../../../DroppableStrictMode";
@@ -14,7 +13,6 @@ import { DragIcon } from "../../../DragIcon";
 import { ArrayState, ItemWithId } from "../../../../types/Config";
 import { useAppContext } from "../../../Puck/context";
 
-const getClassNameInput = getClassNameFactory("Input", inputStyles);
 const getClassName = getClassNameFactory("ArrayField", styles);
 const getClassNameItem = getClassNameFactory("ArrayFieldItem", styles);
 
@@ -24,6 +22,8 @@ export const ArrayField = ({
   value,
   name,
   label,
+  readOnly,
+  readOnlyFields = {},
 }: InputProps) => {
   const [arrayFieldId] = useState(generateId("ArrayField"));
 
@@ -68,13 +68,12 @@ export const ArrayField = ({
   }
 
   return (
-    <div className={getClassNameInput()}>
-      <b className={getClassNameInput("label")}>
-        <div className={getClassNameInput("labelIcon")}>
-          <List size={16} />
-        </div>
-        {label || name}
-      </b>
+    <FieldLabelInternal
+      label={label || name}
+      icon={<List size={16} />}
+      el="div"
+      readOnly={readOnly}
+    >
       <DragDropContext
         onDragEnd={(event) => {
           if (event.destination) {
@@ -89,7 +88,7 @@ export const ArrayField = ({
           }
         }}
       >
-        <DroppableStrictMode droppableId="array">
+        <DroppableStrictMode droppableId="array" isDropDisabled={readOnly}>
           {(provided, snapshot) => {
             return (
               <div
@@ -110,8 +109,10 @@ export const ArrayField = ({
                           getClassNameItem({
                             isExpanded: arrayState.openId === _arrayId,
                             isDragging: snapshot.isDragging,
+                            readOnly,
                           })
                         }
+                        isDragDisabled={readOnly}
                       >
                         {() => (
                           <>
@@ -133,32 +134,34 @@ export const ArrayField = ({
                                 ? field.getItemSummary(data, i)
                                 : `Item #${i}`}
                               <div className={getClassNameItem("rhs")}>
-                                <div className={getClassNameItem("actions")}>
-                                  <div className={getClassNameItem("action")}>
-                                    <IconButton
-                                      onClick={() => {
-                                        const existingValue = [
-                                          ...(value || []),
-                                        ];
-                                        const existingItems = [
-                                          ...(arrayState.items || []),
-                                        ];
+                                {!readOnly && (
+                                  <div className={getClassNameItem("actions")}>
+                                    <div className={getClassNameItem("action")}>
+                                      <IconButton
+                                        onClick={() => {
+                                          const existingValue = [
+                                            ...(value || []),
+                                          ];
+                                          const existingItems = [
+                                            ...(arrayState.items || []),
+                                          ];
 
-                                        existingValue.splice(i, 1);
-                                        existingItems.splice(i, 1);
+                                          existingValue.splice(i, 1);
+                                          existingItems.splice(i, 1);
 
-                                        setArrayState(
-                                          { items: existingItems },
-                                          true
-                                        );
-                                        onChange(existingValue);
-                                      }}
-                                      title="Delete"
-                                    >
-                                      <Trash size={16} />
-                                    </IconButton>
+                                          setArrayState(
+                                            { items: existingItems },
+                                            true
+                                          );
+                                          onChange(existingValue);
+                                        }}
+                                        title="Delete"
+                                      >
+                                        <Trash size={16} />
+                                      </IconButton>
+                                    </div>
                                   </div>
-                                </div>
+                                )}
                                 <div>
                                   <DragIcon />
                                 </div>
@@ -173,11 +176,22 @@ export const ArrayField = ({
                                     const subField =
                                       field.arrayFields![fieldName];
 
+                                    const subFieldName = `${name}[${i}].${fieldName}`;
+                                    const wildcardFieldName = `${name}[*].${fieldName}`;
+
                                     return (
                                       <InputOrGroup
-                                        key={`${name}_${i}_${fieldName}`}
-                                        name={`${name}_${i}_${fieldName}`}
+                                        key={subFieldName}
+                                        name={subFieldName}
                                         label={subField.label || fieldName}
+                                        readOnly={
+                                          typeof readOnlyFields[
+                                            subFieldName
+                                          ] !== "undefined"
+                                            ? readOnlyFields[subFieldName]
+                                            : readOnlyFields[wildcardFieldName]
+                                        }
+                                        readOnlyFields={readOnlyFields}
                                         field={subField}
                                         value={data[fieldName]}
                                         onChange={(val) =>
@@ -216,6 +230,6 @@ export const ArrayField = ({
           }}
         </DroppableStrictMode>
       </DragDropContext>
-    </div>
+    </FieldLabelInternal>
   );
 };

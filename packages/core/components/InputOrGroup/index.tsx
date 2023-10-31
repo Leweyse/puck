@@ -11,6 +11,7 @@ import {
   DefaultField,
   TextareaField,
 } from "./fields";
+import { Lock } from "react-feather";
 
 const getClassName = getClassNameFactory("Input", styles);
 
@@ -18,19 +19,59 @@ export const FieldLabel = ({
   children,
   icon,
   label,
+  el = "label",
+  readOnly,
+  className,
 }: {
   children?: ReactNode;
   icon?: ReactNode;
   label: string;
+  el?: "label" | "div";
+  readOnly?: boolean;
+  className?: string;
 }) => {
+  const El = el;
   return (
-    <label>
+    <El className={className}>
       <div className={getClassName("label")}>
         {icon ? <div className={getClassName("labelIcon")}>{icon}</div> : <></>}
         {label}
+
+        {readOnly && (
+          <div className={getClassName("disabledIcon")} title="Read-only">
+            <Lock size="12" />
+          </div>
+        )}
       </div>
       {children}
-    </label>
+    </El>
+  );
+};
+
+export const FieldLabelInternal = ({
+  children,
+  icon,
+  label,
+  el = "label",
+  readOnly,
+}: {
+  children?: ReactNode;
+  icon?: ReactNode;
+  label: string;
+  el?: "label" | "div";
+  readOnly?: boolean;
+}) => {
+  const El = el;
+  return (
+    <FieldLabel
+      label={label}
+      icon={icon}
+      className={getClassName({ readOnly })}
+      readOnly={readOnly}
+      el={el}
+    >
+      {children}
+    </FieldLabel>
   );
 };
 
@@ -41,6 +82,7 @@ export type InputProps = {
   label?: string;
   onChange: (value: any) => void;
   readOnly?: boolean;
+  readOnlyFields?: Record<string, boolean | undefined>;
 };
 
 export const InputOrGroup = (props: InputProps) => {
