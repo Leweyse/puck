@@ -1,5 +1,5 @@
 .LayerTree {
-  color: var(--puck-color-grey-2);
+  color: var(--puck-color-layer_tree-foreground);
   font-family: var(--puck-font-stack);
   font-size: var(--puck-font-size-xxs);
   margin: 0;
@@ -9,14 +9,17 @@
 }
 
 .LayerTree-zoneTitle {
-  color: var(--puck-color-grey-4);
+  color: var(--puck-color-layer_tree-muted-foreground);
   font-size: var(--puck-font-size-xxxs);
   text-transform: uppercase;
 }
 
 .LayerTree-helper {
   text-align: center;
-  color: var(--puck-color-grey-6);
+
+  /* This has been implemented only because it reduces the custom properties required */ 
+  color: var(--puck-color-layer_tree-muted-foreground); 
+
   font-family: var(--puck-font-stack);
   margin: 8px 4px;
 }
@@ -47,18 +50,18 @@
 
 .Layer:not(.Layer--isSelected) > .Layer-inner:hover,
 .Layer--isHovering > .Layer-inner {
-  color: var(--puck-color-blue);
-  background: var(--puck-color-azure-85);
+  color: var(--puck-color-layer_tree-foreground--interactive);
+  background: var(--puck-color-layer_tree-background--interactive);
 }
 
 .Layer--isSelected {
-  background: var(--puck-color-azure-9);
-  border-color: var(--puck-color-azure-7);
+  background: var(--puck-color-layer_tree-background--selected);
+  border-color: var(--puck-color-layer_tree-border--selected);
   border-radius: 4px;
 }
 
 .Layer--isSelected > .Layer-inner {
-  background: var(--puck-color-azure-85);
+  background: var(--puck-color-layer_tree-background--interactive);
   font-weight: 600;
 }
 
@@ -90,11 +93,12 @@
 }
 
 .Layer-icon {
-  color: var(--puck-color-rose-6);
+  color: var(--puck-color-layer_tree-accent);
   margin-top: 4px;
 }
 
 .Layer-zoneIcon {
-  color: var(--puck-color-grey-7);
+  /* This has been implemented only because it reduces the custom properties required */ 
+  color: var(--puck-color-layer_tree-muted-foreground);
   margin-top: 4px;
 }

@@ -1,5 +1,5 @@
 .OutlineList {
-  color: var(--puck-color-grey-2);
+  color: var(--puck-color-outline_list-foreground);
   font-family: var(--puck-font-stack);
   margin: 0;
   margin-left: 16px;
@@ -9,7 +9,7 @@
 }
 
 .OutlineList::before {
-  background: var(--puck-color-grey-7);
+  background: var(--puck-color-outline_list_decore);
   position: absolute;
   left: -1px;
   top: 0px;
@@ -24,7 +24,7 @@
 }
 
 .OutlineListItem::before {
-  background: var(--puck-color-grey-7);
+  background: var(--puck-color-outline_list_decore);
   position: absolute;
   left: -17px;
   top: 9px;
@@ -34,7 +34,7 @@
 }
 
 .OutlineListItem--clickable:hover {
-  color: var(--puck-color-blue);
+  color: var(--puck-color-outline_list-foreground--interactive);
   cursor: pointer;
 }
 

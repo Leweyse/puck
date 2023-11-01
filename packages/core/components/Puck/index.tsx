@@ -370,9 +370,9 @@ export function Puck({
                     <header
                       style={{
                         gridArea: "header",
-                        color: "var(--puck-color-black)",
-                        background: "var(--puck-color-white)",
-                        borderBottom: "1px solid var(--puck-color-grey-8)",
+                        color: "var(--puck-color-foreground)",
+                        background: "var(--puck-color-background)",
+                        borderBottom: "1px solid var(--puck-color-border)",
                       }}
                     >
                       {renderHeader ? (
@@ -455,7 +455,7 @@ export function Puck({
                                   size={21}
                                   stroke={
                                     canRewind
-                                      ? "var(--puck-color-black)"
+                                      ? "var(--puck-color-foreground)"
                                       : "var(--puck-color-grey-7)"
                                   }
                                 />
@@ -469,7 +469,7 @@ export function Puck({
                                   size={21}
                                   stroke={
                                     canForward
-                                      ? "var(--puck-color-black)"
+                                      ? "var(--puck-color-foreground)"
                                       : "var(--puck-color-grey-7)"
                                   }
                                 />
@@ -495,8 +495,8 @@ export function Puck({
                     <div
                       style={{
                         gridArea: "left",
-                        background: "var(--puck-color-grey-11)",
-                        borderRight: "1px solid var(--puck-color-grey-8)",
+                        background: "var(--puck-color-muted-background)",
+                        borderRight: "1px solid var(--puck-color-border)",
                         overflowY: "auto",
                         display: "flex",
                         flexDirection: "column",
@@ -566,7 +566,7 @@ export function Puck({
                       >
                         <div
                           style={{
-                            border: "1px solid var(--puck-color-grey-8)",
+                            border: "1px solid var(--puck-color-border)",
                           }}
                         >
                           <Page
@@ -589,13 +589,13 @@ export function Puck({
                     </div>
                     <div
                       style={{
-                        borderLeft: "1px solid var(--puck-color-grey-8)",
+                        borderLeft: "1px solid var(--puck-color-border)",
                         overflowY: "auto",
                         gridArea: "right",
                         fontFamily: "var(--puck-font-stack)",
                         display: "flex",
                         flexDirection: "column",
-                        background: "var(--puck-color-white)",
+                        background: "var(--puck-color-background)",
                       }}
                     >
                       <FieldWrapper dispatch={dispatch} state={appState}>

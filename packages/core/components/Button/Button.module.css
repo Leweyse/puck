@@ -40,7 +40,7 @@
 }
 
 .Button--primary {
-  background: var(--puck-color-blue);
+  background: var(--puck-color-accent);
 }
 
 .Button--primary:hover {

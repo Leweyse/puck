@@ -134,8 +134,8 @@
 }
 
 .ArrayFieldItem-action:hover {
-  background: var(--puck-color-input_label_action-background--interactive);
+  background: var(--puck-color-actions-background--interactive);
   border-radius: 4px;
-  color: var(--puck-color-input_label_action-foreground--interactive);
+  color: var(--puck-color-actions-foreground--interactive);
   cursor: pointer;
 }

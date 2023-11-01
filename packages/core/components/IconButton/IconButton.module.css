@@ -1,7 +1,7 @@
 .IconButton {
-  background: transparent;
+  background: var(--puck-color-icon_button-background);
   border: none;
-  color: var(--puck-color-grey-3);
+  color: var(--puck-color-icon_button-foreground);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,7 +10,7 @@
 }
 
 .IconButton:hover {
-  background: var(--puck-color-grey-9);
-  color: var(--puck-color-blue);
+  background: var(--puck-color-actions-background--interactive);
+  color: var(--puck-color-actions-foreground--interactive);
   cursor: pointer;
 }

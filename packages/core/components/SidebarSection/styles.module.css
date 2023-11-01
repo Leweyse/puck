@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  color: black;
+  color: var(--puck-color-sidebar_section-foreground);
 }
 
 .SidebarSection:last-of-type {
@@ -10,14 +10,18 @@
 }
 
 .SidebarSection-title {
-  background: white;
+  background: var(--puck-color-sidebar_section-background);
   padding: 16px;
-  border-bottom: 1px solid var(--puck-color-grey-8);
+  border-bottom: 1px solid var(--puck-color-sidebar_section-border);
   overflow-x: auto;
 }
 
+.SidebarSection-title h2 {
+  color: var(--puck-color-sidebar_section-foreground);
+}
+
 .SidebarSection-content {
-  border-bottom: 1px solid var(--puck-color-grey-8);
+  border-bottom: 1px solid var(--puck-color-sidebar_section-border);
   padding: 16px;
 }
 
@@ -31,12 +35,12 @@
 }
 
 .SidebarSection-breadcrumbLabel {
-  color: var(--puck-color-azure-3);
+  color: var(--puck-color-sidebar_section-accent);
   flex-shrink: 0;
 }
 
 .SidebarSection-breadcrumbLabel:hover {
-  color: var(--puck-color-azure-4);
+  color: var(--puck-color-sidebar_section-accent--interactive);
   cursor: pointer;
   text-decoration: underline;
 }

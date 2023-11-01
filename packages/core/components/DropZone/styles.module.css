@@ -29,21 +29,21 @@
 .DropZone--hoveringOverArea:not(.DropZone--isDisabled):not(
     .DropZone--isRootZone
   ) {
-  background: var(--puck-color-dropzone-background--interactive);
-  outline: 2px dashed var(--puck-color-dropzone-border--interactive);
+  background: var(--puck-color-dropzone-background);
+  outline: 2px dashed var(--puck-color-dropzone-border);
 }
 
 .DropZone:not(.DropZone--hasChildren) {
-  background: var(--puck-color-dropzone-background--interactive);
-  outline: 2px dashed var(--puck-color-dropzone-border--interactive);
+  background: var(--puck-color-dropzone-background);
+  outline: 2px dashed var(--puck-color-dropzone-border);
 }
 
 .DropZone--isDestination {
-  outline: 2px dashed var(--puck-color-dropzone-border--destination) !important;
+  outline: 2px dashed var(--puck-color-dropzone-border--interactive) !important;
 }
 
 .DropZone--isDestination:not(.DropZone--isRootZone) {
-  background: var(--puck-color-dropzone-background--destination) !important;
+  background: var(--puck-color-dropzone-background--interactive) !important;
 }
 
 .DropZone-item {
