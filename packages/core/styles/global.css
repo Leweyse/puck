@@ -2,10 +2,3 @@
 @import "./typography.css";
 @import "./theme.css";
 
-:root {
-  --puck-color-background: var(--puck-color-black);
-  --puck-color-foreground: var(--puck-color-white);
-  --puck-color-muted-background: var(--puck-color-black);
-  --puck-color-muted-foreground: var(--puck-color-grey-6);
-  --puck-color-border: var(--puck-color-grey-8);
-}
