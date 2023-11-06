@@ -2,16 +2,6 @@ import { ReactElement } from "react";
 import { ReactNode } from "react";
 import { ItemSelector } from "../lib/get-item";
 
-export type Adaptor<
-  AdaptorParams = {},
-  TableShape extends Record<string, any> = {},
-  PropShape = TableShape
-> = {
-  name: string;
-  fetchList: (adaptorParams?: AdaptorParams) => Promise<TableShape[] | null>;
-  mapProp?: (value: TableShape) => PropShape;
-};
-
 type WithPuckProps<Props> = Props & {
   id: string;
 };
@@ -43,12 +33,35 @@ export type ArrayField<
   getItemSummary?: (item: Props[0], index?: number) => string;
 };
 
+// DEPRECATED
+export type Adaptor<
+  AdaptorParams = {},
+  TableShape extends Record<string, any> = {},
+  PropShape = TableShape
+> = {
+  name: string;
+  fetchList: (adaptorParams?: AdaptorParams) => Promise<TableShape[] | null>;
+  mapProp?: (value: TableShape) => PropShape;
+};
+
+// DEPRECATED
+export type ExternalFieldWithAdaptor<
+  Props extends { [key: string]: any } = { [key: string]: any }
+> = BaseField & {
+  type: "external";
+  placeholder?: string;
+  adaptor: Adaptor<any, any, Props>;
+  adaptorParams?: object;
+  getItemSummary: (item: Props, index?: number) => string;
+};
+
 export type ExternalField<
   Props extends { [key: string]: any } = { [key: string]: any }
 > = BaseField & {
   type: "external";
-  adaptor: Adaptor<any, any, Props>;
-  adaptorParams?: object;
+  placeholder?: string;
+  fetchList: () => Promise<any[] | null>;
+  mapProp?: (value: any) => Props;
   getItemSummary: (item: Props, index?: number) => string;
 };
 
@@ -72,6 +85,7 @@ export type Field<
   | SelectField
   | ArrayField<Props>
   | ExternalField<Props>
+  | ExternalFieldWithAdaptor<Props>
   | CustomField;
 
 export type DefaultRootProps = {

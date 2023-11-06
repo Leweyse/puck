@@ -5,23 +5,29 @@ import { ExternalField } from "../../types/Config";
 import { Link, Unlock } from "react-feather";
 import { Modal } from "../Modal";
 import { Heading } from "../Heading";
+import { ClipLoader } from "react-spinners";
 
 const getClassName = getClassNameFactory("ExternalInput", styles);
+const getClassNameModal = getClassNameFactory("ExternalInputModal", styles);
+
+const dataCache: Record<string, any> = {};
 
 export const ExternalInput = ({
   field,
   onChange,
   value = null,
+  name,
 }: {
   field: ExternalField;
   onChange: (value: any) => void;
   value: any;
+  name: string;
 }) => {
-  const { mapProp = (val) => val } = field.adaptor || {};
+  const { mapProp = (val) => val } = field || {};
 
   const [data, setData] = useState<Record<string, any>[]>([]);
   const [isOpen, setOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState(value);
+  const [isLoading, setIsLoading] = useState(true);
   const keys = useMemo(() => {
     const validKeys: Set<string> = new Set();
 
@@ -38,24 +44,21 @@ export const ExternalInput = ({
 
   useEffect(() => {
     (async () => {
-      if (field.adaptor) {
-        const listData = await field.adaptor.fetchList(field.adaptorParams);
+      const listData = dataCache[name] || (await field.fetchList());
 
-        if (listData) {
-          setData(listData);
-        }
+      if (listData) {
+        setData(listData);
+        setIsLoading(false);
+
+        dataCache[name] = listData;
       }
     })();
-  }, [field.adaptor, field.adaptorParams]);
-
-  if (!field.adaptor) {
-    return <div>Incorrectly configured</div>;
-  }
+  }, []);
 
   return (
     <div
       className={getClassName({
-        hasData: !!selectedData,
+        dataSelected: !!value,
         modalVisible: isOpen,
       })}
     >
@@ -65,24 +68,23 @@ export const ExternalInput = ({
           className={getClassName("button")}
         >
           {/* NB this is hardcoded to strapi for now */}
-          {selectedData ? (
+          {value ? (
             field.getItemSummary ? (
-              field.getItemSummary(selectedData)
+              field.getItemSummary(value)
             ) : (
-              `${field.adaptor.name} item`
+              "External item"
             )
           ) : (
             <>
               <Link size="16" />
-              <span>Select from {field.adaptor.name}</span>
+              <span>{field.placeholder}</span>
             </>
           )}
         </button>
-        {selectedData && (
+        {value && (
           <button
             className={getClassName("detachButton")}
             onClick={() => {
-              setSelectedData(null);
               onChange(null);
             }}
           >
@@ -91,40 +93,51 @@ export const ExternalInput = ({
         )}
       </div>
       <Modal onClose={() => setOpen(false)} isOpen={isOpen}>
-        <div className={getClassName("masthead")}>
-          <Heading rank={2} size="xxl">
-            Select content
-          </Heading>
-        </div>
+        <div
+          className={getClassNameModal({
+            isLoading,
+            loaded: !isLoading,
+            hasData: !!data,
+          })}
+        >
+          <div className={getClassNameModal("masthead")}>
+            <Heading rank={2} size="xxl">
+              Select content
+            </Heading>
+          </div>
 
-        {data.length ? (
-          <div className={getClassName("modalTableWrapper")}>
-            <table className={getClassName("table")}>
-              <thead>
-                <tr>
+          <div className={getClassNameModal("tableWrapper")}>
+            <table className={getClassNameModal("table")}>
+              <thead className={getClassNameModal("thead")}>
+                <tr className={getClassNameModal("tr")}>
                   {keys.map((key) => (
-                    <th key={key} style={{ textAlign: "left" }}>
+                    <th
+                      key={key}
+                      className={getClassNameModal("th")}
+                      style={{ textAlign: "left" }}
+                    >
                       {key}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className={getClassNameModal("tbody")}>
                 {data.map((item, i) => {
                   return (
                     <tr
                       key={i}
                       style={{ whiteSpace: "nowrap" }}
+                      className={getClassNameModal("tr")}
                       onClick={(e) => {
                         onChange(mapProp(item));
 
                         setOpen(false);
-
-                        setSelectedData(mapProp(item));
                       }}
                     >
                       {keys.map((key) => (
-                        <td key={key}>{item[key]}</td>
+                        <td key={key} className={getClassNameModal("td")}>
+                          {item[key]}
+                        </td>
                       ))}
                     </tr>
                   );
@@ -132,9 +145,13 @@ export const ExternalInput = ({
               </tbody>
             </table>
           </div>
-        ) : (
-          <div style={{ padding: 24 }}>No content</div>
-        )}
+
+          <div className={getClassNameModal("noContentBanner")}>No content</div>
+
+          <div className={getClassNameModal("loadingBanner")}>
+            <ClipLoader size={24} />
+          </div>
+        </div>
       </Modal>
     </div>
   );
