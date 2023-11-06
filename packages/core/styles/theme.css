@@ -1,6 +1,9 @@
 :root {
   --puck-color-background: var(--puck-color-white);
   --puck-color-foreground: var(--puck-color-black);
+  --puck-color-background--interactive: var(--puck-color-azure-9);
+  --puck-color-foreground--interactive: var(--puck-color-azure-4);
+
   --puck-color-muted-background: var(--puck-color-grey-11);
   --puck-color-muted-foreground: var(--puck-color-grey-4);
   --puck-color-accent: var(--puck-color-blue);
@@ -24,13 +27,9 @@
   --puck-color-sidebar_section-accent--interactive: var(--puck-color-azure-4);
 
   --puck-color-component_list_title-foreground: var(--puck-color-muted-foreground);
-  --puck-color-component_list_title-background--interactive: var(--puck-color-azure-9);
-  --puck-color-component_list_title-foreground--interactive: var(--puck-color-azure-4);
   --puck-color-component_list_item-background: var(--puck-color-background); 
   --puck-color-component_list_item-foreground: var(--puck-color-foreground); 
   --puck-color-component_list_item-border: var(--puck-color-border);
-  --puck-color-component_list_item-background--interactive: var(--puck-color-azure-9); 
-  --puck-color-component_list_item-foreground--interactive: var(--puck-color-azure-4); 
   --puck-color-component_list_item-border--interactive: var(--puck-color-border);
   --puck-color-component_list_item_icon: var(--puck-color-muted-foreground);
   
@@ -52,8 +51,6 @@
   --puck-color-input-muted-foreground: var(--puck-color-grey-4);
   --puck-color-input-background--readonly: var(--puck-color-input-muted-background);
   --puck-color-input-foreground--readonly: var(--puck-color-grey-5);
-  --puck-color-input-background--interactive: var(--puck-color-azure-9);
-  --puck-color-input-foreground--interactive: var(--puck-color-azure-4);
   --puck-color-input-border--interactive: var(--puck-color-neutral-3);
   --puck-color-input_label-foreground: var(--puck-color-grey-3);
   --puck-color-input_label_icon: var(--puck-color-grey-6);

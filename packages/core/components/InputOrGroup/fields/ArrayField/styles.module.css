@@ -11,7 +11,7 @@
 }
 
 .ArrayField--isDraggingFrom {
-  background-color: var(--puck-color-input-background--interactive);
+  background-color: var(--puck-color-background--interactive);
 }
 
 .ArrayField-addButton {
@@ -19,7 +19,7 @@
   border: none;
   border-radius: 4px;
   display: flex;
-  color: var(--puck-color-input-foreground--interactive);
+  color: var(--puck-color-foreground--interactive);
   justify-content: center;
   cursor: pointer;
   width: 100%;
@@ -34,8 +34,8 @@
 }
 
 .ArrayField:not(.ArrayField--isDraggingFrom) > .ArrayField-addButton:hover {
-  background: var(--puck-color-input-background--interactive);
-  color: var(--puck-color-input-foreground--interactive);
+  background: var(--puck-color-background--interactive);
+  color: var(--puck-color-foreground--interactive);
 }
 
 /**
@@ -97,9 +97,9 @@
 
 .ArrayFieldItem-summary:hover,
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {
-  background: var(--puck-color-input-background--interactive);
+  background: var(--puck-color-background--interactive);
   cursor: pointer;
-  color: var(--puck-color-input-foreground--interactive);
+  color: var(--puck-color-foreground--interactive);
 }
 
 .ArrayFieldItem-body {

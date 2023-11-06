@@ -14,7 +14,7 @@
   background-color: var(--puck-color-input-background);
   border: 1px solid var(--puck-color-input-border);
   border-radius: 4px;
-  color: var(--puck-color-input-foreground--interactive);
+  color: var(--puck-color-foreground--interactive);
   padding: 12px 16px;
   font-weight: 500;
   white-space: nowrap;
@@ -27,8 +27,8 @@
 .ExternalInput-button:hover,
 .ExternalInput-detachButton:hover {
   cursor: pointer;
-  background: var(--puck-color-input-background--interactive);
-  color: var(--puck-color-input-foreground--interactive);
+  background: var(--puck-color-background--interactive);
+  color: var(--puck-color-foreground--interactive);
   z-index: 1;
 }
 

@@ -38,7 +38,7 @@
 }
 
 .Input-disabledIcon {
-  color: var(--puck-color-input-foreground--interactive);
+  color: var(--puck-color-foreground--interactive);
   margin-left: auto;
 }
 
@@ -103,7 +103,7 @@
 }
 
 .Input-radioInner:hover {
-  background-color: var(--puck-color-input-background--interactive);
+  background-color: var(--puck-color-background--interactive);
   cursor: pointer;
 }
 
@@ -117,14 +117,14 @@
 }
 
 .Input-radio .Input-radioInput:checked ~ .Input-radioInner {
-  background-color: var(--puck-color-input-background--interactive);
+  background-color: var(--puck-color-background--interactive);
   color: var(--puck-color-input-foreground);
   font-weight: 500;
 }
 
 .Input--readOnly .Input-radioInput:checked ~ .Input-radioInner {
-  background-color: var(--puck-color-input-background--interactive);
-  color: var(--puck-color-input-foreground--interactive);
+  background-color: var(--puck-color-background--interactive);
+  color: var(--puck-color-foreground--interactive);
 }
 
 .Input-radio .Input-radioInput {

@@ -31,8 +31,8 @@
 }
 
 .ComponentList-title:hover {
-  background-color: var(--puck-color-component_list_title-background--interactive);
-  color: var(--puck-color-component_list_title-foreground--interactive);
+  background-color: var(--puck-color-background--interactive);
+  color: var(--puck-color-foreground--interactive);
   cursor: pointer;
 }
 
@@ -65,6 +65,6 @@
 
 .ComponentList:not(.ComponentList--isDraggingFrom)
   .ComponentListItem-draggable:hover {
-  background-color: var(--puck-color-component_list_item-background--interactive);
-  color: var(--puck-color-component_list_item-foreground--interactive);
+  background-color: var(--puck-color-background--interactive);
+  color: var(--puck-color-foreground--interactive);
 }
