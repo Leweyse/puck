@@ -8,6 +8,7 @@
   --puck-color-muted-foreground: var(--puck-color-grey-4);
 
   --puck-color-accent: var(--puck-color-blue);
+  --puck-color-accent-foreground: var(--puck-color-azure-9);
 
   --puck-color-border: var(--puck-color-grey-8);
   --puck-color-border--interactive: var(--puck-color-neutral-3);
@@ -20,9 +21,9 @@
   --puck-color-actions-background--interactive: var(--puck-color-grey-9);
   --puck-color-actions-foreground--interactive: var(--puck-color-accent);
 
-  --puck-sidebar-color-background: var(--puck-color-background);
-  --puck-sidebar-color-foreground: var(--puck-color-foreground);
-  --puck-sidebar-color-accent: var(--puck-color-azure-3);
+  --puck-color-sidebar-background: var(--puck-color-background);
+  --puck-color-sidebar-foreground: var(--puck-color-foreground);
+  --puck-color-sidebar-accent: var(--puck-color-azure-3);
 
   --puck-color-draggable_component-background--interactive: #abc7e530;
   --puck-color-draggable_component-border--interactive: var(--puck-color-azure-8);

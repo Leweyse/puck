@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  color: var(--puck-sidebar-color-foreground);
+  color: var(--puck-color-sidebar-foreground);
 }
 
 .SidebarSection:last-of-type {
@@ -10,14 +10,14 @@
 }
 
 .SidebarSection-title {
-  background: var(--puck-sidebar-color-background);
+  background: var(--puck-color-sidebar-background);
   padding: 16px;
   border-bottom: 1px solid var(--puck-color-border);
   overflow-x: auto;
 }
 
 .SidebarSection-title h2 {
-  color: var(--puck-sidebar-color-foreground);
+  color: var(--puck-color-sidebar-foreground);
 }
 
 .SidebarSection-content {
@@ -35,7 +35,7 @@
 }
 
 .SidebarSection-breadcrumbLabel {
-  color: var(--puck-sidebar-color-accent);
+  color: var(--puck-color-sidebar-accent);
   flex-shrink: 0;
 }
 
