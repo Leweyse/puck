@@ -70,7 +70,7 @@
 }
 
 .ArrayFieldItem-summary {
-  color: var(--puck-color-input_label-foreground);
+  color: var(--puck-color-muted-foreground);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,8 +82,8 @@
 }
 
 .ArrayFieldItem--readOnly > .ArrayFieldItem-summary {
-  background-color: var(--puck-color-input-background--readonly);
-  color: var(--puck-color-input-foreground--readonly);
+  background-color: var(--puck-color-muted-background);
+  color: var(--puck-color-muted-foreground);
 }
 
 .ArrayFieldItem--isExpanded > .ArrayFieldItem-summary {

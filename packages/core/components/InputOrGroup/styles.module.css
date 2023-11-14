@@ -1,5 +1,5 @@
 .Input {
-  color: var(--puck-color-input_label-foreground);
+  color: var(--puck-color-muted-foreground);
   padding: 16px;
   padding-bottom: 12px;
   display: block;
@@ -67,9 +67,9 @@
 
 .Input--readOnly > .Input-input,
 .Input--readOnly > select.Input-input {
-  background-color: var(--puck-color-input-background--readonly);
+  background-color: var(--puck-color-muted-background);
   border-color: var(--puck-color-border);
-  color: var(--puck-color-input-foreground--readonly);
+  color: var(--puck-color-muted-foreground);
   opacity: 1;
 }
 
@@ -112,8 +112,8 @@
 }
 
 .Input--readOnly .Input-radioInner {
-  background-color: var(--puck-color-input-background--readonly);
-  color: var(--puck-color-input-foreground--readonly);
+  background-color: var(--puck-color-muted-background);
+  color: var(--puck-color-muted-foreground);
 }
 
 .Input-radio .Input-radioInput:checked ~ .Input-radioInner {

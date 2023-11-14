@@ -1,7 +1,7 @@
 .IconButton {
-  background: var(--puck-color-icon_button-background);
+  background: transparent;
   border: none;
-  color: var(--puck-color-icon_button-foreground);
+  color: var(--puck-color-muted-foreground);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -17,9 +17,6 @@
   --puck-color-dropzone-background--interactive: var(--puck-color-azure-85);
   --puck-color-dropzone-border--interactive: var(--puck-color-azure-3);
 
-  --puck-color-icon_button-background: transparent;
-  --puck-color-icon_button-foreground: var(--puck-color-grey-3);
-
   --puck-color-actions-background--interactive: var(--puck-color-grey-9);
   --puck-color-actions-foreground--interactive: var(--puck-color-accent);
 
@@ -38,9 +35,6 @@
   --puck-color-draggable_actions-background--interactive: var(--puck-color-grey-2);
   --puck-color-draggable_actions-foreground--interactive: var(--puck-color-azure-5);
 
-  --puck-color-input-background--readonly: var(--puck-color-muted-background);
-  --puck-color-input-foreground--readonly: var(--puck-color-grey-5);
-  --puck-color-input_label-foreground: var(--puck-color-grey-3);
   --puck-color-input_label_icon: var(--puck-color-grey-6);
 
   --puck-color-layer_tree-foreground: var(--puck-color-grey-2);
