@@ -11,8 +11,8 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
-  background-color: var(--puck-color-input-background);
-  border: 1px solid var(--puck-color-input-border);
+  background-color: var(--puck-color-background);
+  border: 1px solid var(--puck-color-border);
   border-radius: 4px;
   color: var(--puck-color-foreground--interactive);
   padding: 12px 16px;
@@ -43,8 +43,8 @@
   border: 1px solid var(--puck-color-input-border);
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  background-color: var(--puck-color-input-muted-background);
-  color: var(--puck-color-input-muted-foreground);
+  background-color: var(--puck-color-muted-background);
+  color: var(--puck-color-muted-foreground);
   display: flex;
   gap: 8px;
   align-items: center;
@@ -61,7 +61,7 @@
 }
 
 .ExternalInputModal-masthead {
-  background-color: var(--puck-color-input-background);
+  background-color: var(--puck-color-background);
   padding: 32px 24px;
 }
 
@@ -86,8 +86,8 @@
 }
 
 .ExternalInput-table-th {
-  border-bottom: 1px solid var(--puck-color-input-border);
-  border-top: 1px solid var(--puck-color-input-border);
+  border-bottom: 1px solid var(--puck-color-border);
+  border-top: 1px solid var(--puck-color-border);
   font-weight: 700;
   padding: 16px 24px;
   opacity: 0.9;

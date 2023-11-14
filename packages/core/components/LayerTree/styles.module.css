@@ -9,7 +9,7 @@
 }
 
 .LayerTree-zoneTitle {
-  color: var(--puck-color-layer_tree-muted-foreground);
+  color: var(--puck-color-muted-foreground);
   font-size: var(--puck-font-size-xxxs);
   text-transform: uppercase;
 }
@@ -18,7 +18,7 @@
   text-align: center;
 
   /* This has been implemented only because it reduces the custom properties required */ 
-  color: var(--puck-color-layer_tree-muted-foreground); 
+  color: var(--puck-color-muted-foreground); 
 
   font-family: var(--puck-font-stack);
   margin: 8px 4px;
@@ -99,6 +99,6 @@
 
 .Layer-zoneIcon {
   /* This has been implemented only because it reduces the custom properties required */ 
-  color: var(--puck-color-layer_tree-muted-foreground);
+  color: var(--puck-color-muted-foreground);
   margin-top: 4px;
 }

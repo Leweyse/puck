@@ -16,7 +16,7 @@
 }
 
 .ComponentList-title {
-  color: var(--puck-color-component_list_title-foreground);
+  color: var(--puck-color-muted-foreground);
   display: flex;
   font-size: var(--puck-font-size-xxxs);
   list-style: none;
@@ -45,11 +45,11 @@
 }
 
 .ComponentListItem-draggable {
-  background: var(--puck-color-component_list_item-background);
-  color: var(--puck-color-component_list_item-foreground);
+  background: var(--puck-color-background);
+  color: var(--puck-color-foreground);
   padding: 12px;
   display: flex;
-  border: 1px var(--puck-color-component_list_item-border) solid;
+  border: 1px var(--puck-color-border) solid;
   border-radius: 4px;
   font-size: var(--puck-font-size-xxs);
   justify-content: space-between;
@@ -60,7 +60,7 @@
 }
 
 .ComponentListItemIcon {
-  color: var(--puck-color-component_list_item_icon);
+  color: var(--puck-color-muted-foreground);
 }
 
 .ComponentList:not(.ComponentList--isDraggingFrom)
