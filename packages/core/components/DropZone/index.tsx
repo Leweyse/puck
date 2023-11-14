@@ -1,6 +1,6 @@
 import { CSSProperties, useContext, useEffect, useState } from "react";
 import { DraggableComponent } from "../DraggableComponent";
-import DroppableStrictMode from "../DroppableStrictMode";
+import { Droppable } from "@hello-pangea/dnd";
 import { getItem } from "../../lib/get-item";
 import { setupZone } from "../../lib/setup-zone";
 import { rootDroppableId } from "../../lib/root-droppable-id";
@@ -121,7 +121,7 @@ function DropZoneEdit({ zone, style }: DropZoneProps) {
    *    but within the area
    * 2. This is an existing component and the user a) is dragging over the
    *    area (which prevents drags between zone areas, breaking the rules
-   *    of react-beautiful-dnd) and b) has the cursor hovering directly over
+   *    of @hello-pangea/dnd) and b) has the cursor hovering directly over
    *    the specific zone (which increases robustness when using flex
    *    layouts)
    */
@@ -150,7 +150,7 @@ function DropZoneEdit({ zone, style }: DropZoneProps) {
         hasChildren: content.length > 0,
       })}
     >
-      <DroppableStrictMode
+      <Droppable
         droppableId={zoneCompound}
         direction={"vertical"}
         isDropDisabled={!isEnabled}
@@ -175,6 +175,7 @@ function DropZoneEdit({ zone, style }: DropZoneProps) {
                 const defaultedProps = {
                   ...config.components[item.type]?.defaultProps,
                   ...item.props,
+                  puck: { renderDropZone: DropZone },
                   editMode: true,
                 };
 
@@ -331,7 +332,7 @@ function DropZoneEdit({ zone, style }: DropZoneProps) {
             </div>
           );
         }}
-      </DroppableStrictMode>
+      </Droppable>
     </div>
   );
 }
@@ -364,7 +365,10 @@ function DropZoneRender({ zone }: DropZoneProps) {
               key={item.props.id}
               value={{ data, config, areaId: item.props.id }}
             >
-              <Component.render {...item.props} />
+              <Component.render
+                {...item.props}
+                puck={{ renderDropZone: DropZone }}
+              />
             </DropZoneProvider>
           );
         }

@@ -270,7 +270,7 @@ When the user interacts with this external field, they'll be presented with a li
 
 ## Dynamic prop resolution
 
-Dynamic prop resolution allows developers to resolve props for components without saving the data to the Puck data model.
+Dynamic prop resolution allows developers to change the props for a component after the props have been changed by the user. This is useful for making third-party API calls, such as requesting the latest content from a headless CMS.
 
 ### resolveData()
 
@@ -373,6 +373,36 @@ import { resolveAllData } from "@measured/puck";
 
 const resolvedData = resolveAllData(data, config);
 ```
+
+### React server components
+
+If you want to use React server components, use ` <Render>` from the `@measured/puck/rsc` bundle instead of the main bundle.
+
+```tsx
+import { Render } from "@measured/puck/rsc";
+import "@measured/puck/dist/index.css";
+
+export function Page() {
+  return <Render config={config} data={data} />;
+}
+```
+
+If you're using DropZones with React server components, use the `puck.renderDropZone` prop provided to your render function instead of the `<DropZone>` component.
+
+```tsx
+export const MyComponent: ComponentConfig = {
+  render: ({ puck: { renderDropZone } }) => {
+    return (
+      <div>
+        {renderDropZone({ zone: "first-drop-zone" })}
+        {renderDropZone({ zone: "second-drop-zone" })}
+      </div>
+    );
+  },
+};
+```
+
+In future, we may deprecate DropZone in favour of renderDropZone.
 
 ## Reference
 
