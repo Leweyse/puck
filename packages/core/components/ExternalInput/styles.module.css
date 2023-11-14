@@ -61,6 +61,7 @@
 }
 
 .ExternalInputModal-masthead {
+  color: var(--puck-color-foreground);
   background-color: var(--puck-color-background);
   padding: 32px 24px;
 }
@@ -74,7 +75,7 @@
 .ExternalInputModal-table {
   border-collapse: unset;
   border-spacing: 0px;
-  color: var(--puck-color-neutral-4);
+  color: var(--puck-color-foreground);
   position: relative;
   z-index: 0;
 }
@@ -99,11 +100,12 @@
 }
 
 .ExternalInputModal-tr:nth-of-type(n) {
-  background-color: white;
+  background-color: var(--puck-color-background);
 }
 
 .ExternalInputModal-tr:nth-of-type(2n) {
-  background-color: var(--puck-color-grey-10);
+  background-color: var(--puck-color-muted);
+  color: var(--puck-color-muted-foreground);
 }
 
 .ExternalInputModal-tr .ExternalInputModal-td:first-of-type {
@@ -112,7 +114,7 @@
 
 .ExternalInputModal-tbody .ExternalInputModal-tr:hover {
   background: var(--puck-color-grey-11);
-  color: var(--puck-color-azure-4);
+  color: var(--puck-color-accent);
   cursor: pointer;
   position: relative;
   margin-left: -5px;

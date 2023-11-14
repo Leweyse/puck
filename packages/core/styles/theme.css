@@ -7,6 +7,10 @@
   --puck-color-muted-background: var(--puck-color-grey-11);
   --puck-color-muted-foreground: var(--puck-color-grey-4);
 
+  --puck-color-primary: var(--puck-color-grey-9);
+  --puck-color-primary-foreground: var(--puck-color-grey-2);
+  --puck-color-secondary: var(--puck-color-azure-85);
+  --puck-color-secondary-foreground: var(--puck-color-accent);
   --puck-color-accent: var(--puck-color-blue);
   --puck-color-accent-foreground: var(--puck-color-azure-9);
 
@@ -18,19 +22,19 @@
   --puck-color-dropzone-background--interactive: var(--puck-color-azure-85);
   --puck-color-dropzone-border--interactive: var(--puck-color-azure-3);
 
-  --puck-color-actions-background--interactive: var(--puck-color-grey-9);
+  --puck-color-actions-background--interactive: var(--puck-color-primary);
   --puck-color-actions-foreground--interactive: var(--puck-color-accent);
 
   --puck-color-sidebar-background: var(--puck-color-background);
   --puck-color-sidebar-foreground: var(--puck-color-foreground);
   --puck-color-sidebar-accent: var(--puck-color-azure-3);
 
-  --puck-color-draggable_component-background--interactive: #abc7e530;
-  --puck-color-draggable_component-border--interactive: var(--puck-color-azure-8);
-  --puck-color-draggable_component-background--dragging: #abc7e510;
-  --puck-color-draggable_component-border--dragging: var(--puck-color-azure-8);
-  --puck-color-draggable_component-background--selected: transparent;
-  --puck-color-draggable_component-border--selected: var(--puck-color-azure-6);
+  --puck-color-draggable-background--interactive: #abc7e530;
+  --puck-color-draggable-border--interactive: var(--puck-color-azure-8);
+  --puck-color-draggable-background--dragging: #abc7e510;
+  --puck-color-draggable-border--dragging: var(--puck-color-azure-8);
+  --puck-color-draggable-background--selected: transparent;
+  --puck-color-draggable-border--selected: var(--puck-color-azure-6);
   --puck-color-draggable_actions-background: var(--puck-color-grey-0);
   --puck-color-draggable_actions-foreground: var(--puck-color-grey-7);
   --puck-color-draggable_actions-background--interactive: var(--puck-color-grey-2);
@@ -38,14 +42,15 @@
 
   --puck-color-input_label_icon: var(--puck-color-grey-6);
 
-  --puck-color-layer_tree-foreground: var(--puck-color-grey-2);
+  --puck-color-layer_tree-background: var(--puck-color-background);
+  --puck-color-layer_tree-foreground: var(--puck-color-primary-foreground);
   --puck-color-layer_tree-accent: var(--puck-color-rose-6);
-  --puck-color-layer_tree-background--interactive: var(--puck-color-azure-85);
-  --puck-color-layer_tree-foreground--interactive: var(--puck-color-blue);
-  --puck-color-layer_tree-background--selected: var(--puck-color-azure-9);
+  --puck-color-layer_tree-background--interactive: var(--puck-color-secondary);
+  --puck-color-layer_tree-foreground--interactive: var(--puck-color-secondary-foreground);
+  --puck-color-layer_tree-background--selected: var(--puck-accent-foreground);
   --puck-color-layer_tree-border--selected: var(--puck-color-azure-7);
 
-  --puck-color-outline_list-foreground: var(--puck-color-grey-2);
+  --puck-color-outline_list-foreground: var(--puck-color-primary-foreground);
   --puck-color-outline_list-foreground--interactive: var(--puck-color-accent);
   --puck-color-outline_list_decore: var(--puck-color-grey-7);
 }

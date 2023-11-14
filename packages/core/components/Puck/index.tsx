@@ -499,7 +499,7 @@ export function Puck({
                     <div
                       style={{
                         gridArea: "left",
-                        background: "var(--puck-color-muted-background)",
+                        background: "var(--puck-color-sidebar-background,var(--puck-color-muted-background))",
                         borderRight: "1px solid var(--puck-color-border)",
                         overflowY: "auto",
                         display: "flex",

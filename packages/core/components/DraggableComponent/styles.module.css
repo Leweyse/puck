@@ -3,8 +3,8 @@
 }
 
 .DraggableComponent--isDragging {
-  background: var(--puck-color-draggable_component-background--dragging);
-  outline: 2px var(--puck-color-draggable_component-border--interactive) solid;
+  background: var(--puck-color-draggable-background--dragging);
+  outline: 2px var(--puck-color-draggable-border--interactive) solid;
   overflow: hidden;
 }
 
@@ -23,7 +23,7 @@
 
 .DraggableComponent-overlay {
   display: none;
-  background: var(--puck-color-draggable_component-background--interactive);
+  background: var(--puck-color-draggable-background--interactive);
   cursor: pointer;
   height: 100%;
   width: 100%;
@@ -64,7 +64,7 @@
 
 .DraggableComponent:not(.DraggableComponent--isSelected)
   > .DraggableComponent-overlay {
-  outline: 2px var(--puck-color-draggable_component-border--interactive) solid;
+  outline: 2px var(--puck-color-draggable-border--interactive) solid;
 }
 
 .DraggableComponent--indicativeHover > .DraggableComponent-overlay {
@@ -82,8 +82,8 @@
 }
 
 .DraggableComponent--isSelected {
-  background: var(--puck-color-draggable_component-background--selected);
-  outline: 2px var(--puck-color-draggable_component-border--selected) solid;
+  background: var(--puck-color-draggable-background--selected);
+  outline: 2px var(--puck-color-draggable-border--selected) solid;
 }
 
 .DraggableComponent--isSelected > .DraggableComponent-overlay {
